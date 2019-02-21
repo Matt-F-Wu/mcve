@@ -5,7 +5,7 @@ import './App.css';
 
 /* Function to send an email with firebase*/
 
-const baseUrl = 'https://relai-223119.appspot.com/server';
+const baseUrl = 'https://relai-223119.appspot.com';
 
 function emailPartner(name, email){
 
