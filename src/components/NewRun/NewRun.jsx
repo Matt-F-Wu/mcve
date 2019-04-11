@@ -3,6 +3,9 @@ import { MuiThemeProvider } from '@material-ui/core/styles';
 import Drawer from '@material-ui/core/Drawer';
 import Fab from '@material-ui/core/Fab';
 import AddIcon from '@material-ui/icons/AddCircle';
+import HelpIcon from '@material-ui/icons/Help';
+import Tooltip from '@material-ui/core/Tooltip';
+import Typography from '@material-ui/core/Typography';
 
 import Search from './Search';
 import DependencyMap from './DependencyMap';
@@ -11,6 +14,7 @@ import RunInfo from './RunInfo';
 import CommandInput from './CommandInput';
 import './NewRun.css';
 import theme from './theme.js';
+
 
 export default class NewRun extends Component {
 
@@ -134,7 +138,22 @@ export default class NewRun extends Component {
             <div
               style={ { flex: 1, marginRight: 16 } }
             >
-              <div className="sectionTitle">Dependencies</div>
+              <div className="row sectionTitle">
+                <div style={ { marginRight: 16 } }>
+                  Dependencies
+                </div>
+                <Tooltip
+                  title={
+                    <Typography variant="caption" style={ {
+                      color: 'white',
+                    } }>
+                      Map an entire bundle or file/directory inside a bundle to a name, which can be referenced in the python command.
+                    </Typography>
+                  }
+                >
+                  <HelpIcon />
+                </Tooltip>
+              </div>
               <table>
                 <tbody>
                 {

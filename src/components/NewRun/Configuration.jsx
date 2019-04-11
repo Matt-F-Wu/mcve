@@ -114,7 +114,7 @@ const Configuration = (props) => {
       />
     </div>
     <div className="row configSection">
-      <div className="inlineLabel">Allocate Time</div>
+      <div className="inlineLabel">Max Time</div>
       <Input
         style={ {
           width: 60,
@@ -157,7 +157,7 @@ const Configuration = (props) => {
         value="checkedA"
       />
       <div className="inlineLabel">
-        Allow failed Dependencies
+        Allow Failed Dependencies
       </div>
     </div>
   </div>;
