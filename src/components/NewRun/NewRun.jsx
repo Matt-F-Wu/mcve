@@ -3,12 +3,11 @@ import { MuiThemeProvider } from '@material-ui/core/styles';
 import Drawer from '@material-ui/core/Drawer';
 import Fab from '@material-ui/core/Fab';
 import AddIcon from '@material-ui/icons/AddCircle';
-import NativeSelect from '@material-ui/core/NativeSelect';
-import Input from '@material-ui/core/Input';
-import Checkbox from '@material-ui/core/Checkbox';
 
 import Search from './Search';
 import DependencyMap from './DependencyMap';
+import Configuration from './Configuration';
+import RunInfo from './RunInfo';
 import CommandInput from './CommandInput';
 import './NewRun.css';
 import theme from './theme.js';
@@ -21,6 +20,7 @@ export default class NewRun extends Component {
   state = {
     bottom: false,
     dependencies: [],
+    tags: [],
   }
 
   toggleDrawer = (bool) => () => {
@@ -63,10 +63,31 @@ export default class NewRun extends Component {
 
   handleCheck = name => event => {
     this.setState({ [name]: event.target.checked });
-  };
+  }
+
+  addTag = (tag) => {
+    if (!tag) {
+      return;
+    }
+    const { tags } = this.state;
+    tags.push(tag);
+    this.setState({ tags });
+  }
+
+  removeTag = (idx) => {
+    const { tags } = this.state;
+    tags.splice(idx, 1);
+    this.setState({ tags });
+  }
 
   render() {
-    const { bottom, dependencies } = this.state;
+    const {
+      bottom,
+      dependencies,
+      network,
+      failedOkay,
+      tags,
+    } = this.state;
 
     return <div>
       <MuiThemeProvider theme={ theme }>
@@ -86,8 +107,8 @@ export default class NewRun extends Component {
         onClose={ this.toggleDrawer(false) }
         PaperProps={ { style: {
           minHeight: '75vh',
-          width: '80vw',
-          marginLeft: '10vw',
+          width: '90vw',
+          marginLeft: '5vw',
           borderTopLeftRadius: 8,
           borderTopRightRadius: 8,
         } } }
@@ -111,7 +132,7 @@ export default class NewRun extends Component {
             } }
           >
             <div
-              style={ { flex: 1 } }
+              style={ { flex: 1, marginRight: 16 } }
             >
               <div className="sectionTitle">Dependencies</div>
               <table>
@@ -136,157 +157,18 @@ export default class NewRun extends Component {
                 searchHandler={ this.addDependency }
               />
             </div>
-            <div
-              style={ { flex: 1 } }
-            >
-              <div className="sectionTitle">Configuration</div>
-              <div className="row configSection">
-                <div className="inlineLabel">
-                  Docker Image
-                </div>
-                <NativeSelect
-                  defaultValue={"codalab/ubuntu:1.9"}
-                  onChange={ this.handleChange('docker') }
-                  input={
-                    <Input
-                      name="Unit"
-                      inputProps={ {
-                        style: { paddingLeft: 8 }
-                      } }
-                    />
-                  }
-                >
-                  <option value="codalab/ubuntu:1.9">codalab/ubuntu:1.9</option>
-                  <option value="codalab/ubuntu:1.8">codalab/ubuntu:1.8</option>
-                  <option value="codalab/ubuntu:1.7">codalab/ubuntu:1.7</option>
-                  <option value="codalab/ubuntu:1.6">codalab/ubuntu:1.6</option>
-                </NativeSelect>
-              </div>
-              <div className="row configSection">
-                <div className="inlineLabel">Memory</div>
-                <Input
-                  defaultValue={ 2 }
-                  style={ {
-                    width: 60,
-                    borderRight: '1px solid #ccc',
-                  } }
-                  onChange={ this.handleChange('memVal') }
-                />
-                <NativeSelect
-                  defaultValue={"g"}
-                  onChange={ this.handleChange('memUnit') }
-                  input={
-                    <Input
-                      name="Unit"
-                      inputProps={ {
-                        style: { paddingLeft: 8 }
-                      } }
-                    />
-                  }
-                >
-                  <option value=""/>
-                  <option value="k">K</option>
-                  <option value="m">M</option>
-                  <option value="g">G</option>
-                  <option value="t">T</option>
-                </NativeSelect>
-              </div>
-              <div className="row configSection">
-                <div className="inlineLabel">Disk</div>
-                <Input
-                  defaultValue={ 10 }
-                  style={ {
-                    width: 60,
-                    borderRight: '1px solid #ccc',
-                  } }
-                  onChange={ this.handleChange('diskVal') }
-                />
-                <NativeSelect
-                  defaultValue={"g"}
-                  onChange={ this.handleChange('diskUnit') }
-                  input={
-                    <Input
-                      name="Unit"
-                      inputProps={ {
-                        style: { paddingLeft: 8 }
-                      } }
-                    />
-                  }
-                >
-                  <option value=""/>
-                  <option value="k">K</option>
-                  <option value="m">M</option>
-                  <option value="g">G</option>
-                  <option value="t">T</option>
-                </NativeSelect>
-              </div>
-              <div className="row configSection">
-                <div className="inlineLabel">CPUs</div>
-                <Input
-                  defaultValue={ 2 }
-                  style={ {
-                    width: 60,
-                  } }
-                  onChange={ this.handleChange('cpus') }
-                />
-              </div>
-              <div className="row configSection">
-                <div className="inlineLabel">GPUs</div>
-                <Input
-                  style={ {
-                    width: 60,
-                  } }
-                  onChange={ this.handleChange('gpus') }
-                />
-              </div>
-              <div className="row configSection">
-                <div className="inlineLabel">Allocate Time</div>
-                <Input
-                  style={ {
-                    width: 60,
-                    borderRight: '1px solid #ccc',
-                  } }
-                  onChange={ this.handleChange('time') }
-                />
-                <NativeSelect
-                  defaultValue={"g"}
-                  onChange={ this.handleChange('time') }
-                  input={
-                    <Input
-                      name="Unit"
-                      inputProps={ {
-                        style: { paddingLeft: 8 }
-                      } }
-                    />
-                  }
-                >
-                  <option value=""/>
-                  <option value="k">m</option>
-                  <option value="m">h</option>
-                  <option value="g">d</option>
-                </NativeSelect>
-              </div>
-              <div className="row">
-                <Checkbox
-                  checked={ this.state.network }
-                  onChange={ this.handleCheck('network') }
-                  value="checkedA"
-                />
-                <div className="inlineLabel">
-                  Allow Network Access
-                </div>
-              </div>
-              <div className="row">
-                <Checkbox
-                  checked={ this.state.failedOkay }
-                  onChange={ this.handleCheck('failedOkay') }
-                  value="checkedA"
-                />
-                <div className="inlineLabel">
-                  Allow failed Dependencies
-                </div>
-              </div>
-            </div>
+            <Configuration
+              handleChange={ this.handleChange }
+              handleCheck={ this.handleCheck }
+              network={ network }
+              failedOkay={ failedOkay }
+            />
+            <RunInfo
+              handleChange={ this.handleChange }
+              addTag={ this.addTag }
+              removeTag={ this.removeTag }
+              tags={ tags }
+            />
           </div>
           <CommandInput />
         </div>
