@@ -9,9 +9,9 @@ export default createMuiTheme({
             contrastText: '#EFF8FF',
         },
         secondary: {
-            light: '#12263F',
+            light: '#D4DDE9',
             main: '#617691',
-            dark: '#D4DDE9',
+            dark: '#12263F',
             contrastText: '#EDF1F5',
         }
     },
@@ -68,6 +68,7 @@ export default createMuiTheme({
         small: 2,
         unit: 4,
         large: 8,
-        largest: 16,
+        larger: 16,
+        largest: 32,
     },
 });
