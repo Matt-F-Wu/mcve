@@ -1,10 +1,10 @@
 import * as React from 'react';
+
 import { withStyles } from '@material-ui/core/styles';
 import Drawer from '@material-ui/core/Drawer';
 import Button from '@material-ui/core/Button';
 import UploadIcon from '@material-ui/icons/CloudUpload';
 import Input from '@material-ui/core/Input';
-import { MuiThemeProvider } from '@material-ui/core/styles';
 
 
 // React doesn't support transpilation of directory and

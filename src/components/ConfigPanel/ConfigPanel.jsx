@@ -4,7 +4,6 @@ import classNames from 'classnames';
 
 import { withStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
-import Button from '@material-ui/core/Button';
 
 class ConfigurationPanel extends React.Component<{
     /** CSS-in-JS styling object. */
@@ -28,8 +27,8 @@ class ConfigurationPanel extends React.Component<{
         return (
             <Grid container direction='row' className={classes.container}>
                 {/* Column 1: Main content area ================================================ */}
-                <Grid item xs={12} sm={sidebar ? 8 : 12}
-                      container direction='column' justify='space-between'
+                <Grid item xs={12} md={sidebar ? 8 : 12}
+                      container direction='column' justify='space-between' wrap='nowrap'
                       className={classes.content}>
                     <Grid item container direction='column'>
                         { children }
@@ -42,7 +41,7 @@ class ConfigurationPanel extends React.Component<{
                 </Grid>
                 {/* Column 2: Sidebar ========================================================== */}
                 { !sidebar ? null : (
-                    <Grid item xs={12} sm={4}
+                    <Grid item xs={12} md={4}
                           container direction='column'
                           className={classes.sidebar}>
                         { sidebar }
@@ -53,22 +52,27 @@ class ConfigurationPanel extends React.Component<{
     }
 }
 
+
 // To inject styles into component
 // -------------------------------
 
 /** CSS-in-JS styling function. */
 const styles = (theme) => ({
     container: {
-        height: '100%',
         flexGrow: 1,
+        height: '100%',
     },
     content: {
         backgroundColor: 'white',
         padding: theme.spacing.larger,
+        maxHeight: '100%',
+        overflow: 'auto',
     },
     sidebar: {
         backgroundColor: theme.color.grey.light,
         padding: theme.spacing.larger,
+        maxHeight: '100%',
+        overflow: 'auto',
     },
     buttons: {
         '& button': {
